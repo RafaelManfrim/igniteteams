@@ -8,13 +8,13 @@ export const HighlightContainer = styled.View`
 export const HighlightTitle = styled.Text`
   text-align: center;
   font-family: ${({ theme }) => theme.FONT_FAMILY.BOLD};
-  font-size: ${({ theme }) => theme.FONT_SIZE.XL};
+  font-size: ${({ theme }) => theme.FONT_SIZE.XL}px;
   color: ${({ theme }) => theme.COLORS.WHITE};
 `
 
 export const HighlightSubtitle = styled.Text`
   text-align: center;
   font-family: ${({ theme }) => theme.FONT_FAMILY.REGULAR};
-  font-size: ${({ theme }) => theme.FONT_SIZE.MD};
+  font-size: ${({ theme }) => theme.FONT_SIZE.MD}px;
   color: ${({ theme }) => theme.COLORS.GRAY_300};
 `
