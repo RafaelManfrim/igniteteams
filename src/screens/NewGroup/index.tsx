@@ -5,6 +5,7 @@ import { Button } from '@components/Button';
 import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { Input } from '@components/Input';
+import { createGroup } from '@storage/group/createGroup';
 
 import { NewGroupContainer, NewGroupContent, NewGroupIcon } from './styles';
 
@@ -13,7 +14,8 @@ export function NewGroup() {
 
   const navigation = useNavigation()
 
-  function handleCreateGroup() {
+  async function handleCreateGroup() {
+    await createGroup(groupName)
     navigation.navigate('players', { group: groupName })
   }
 
