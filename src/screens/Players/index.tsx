@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Alert, FlatList, TextInput } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { Button } from '@components/Button';
 import { ButtonIcon } from '@components/ButtonIcon';
@@ -17,6 +17,7 @@ import { removePlayerByGroup } from '@storage/player/removePlayerByGroup';
 import { getPlayersByGroupAndTeam } from '@storage/player/getPlayerByGroupAndTeam';
 
 import { HeaderList, NumberOfPlayers, PlayerContainerForm, PlayersContainer } from './styles';
+import { deleteGroupByName } from '@storage/group/deleteGroupByName';
 
 type PlayerRouteParams = {
   group: string
@@ -26,6 +27,8 @@ export function Players() {
   const [newPlayerName, setNewPlayerName] = useState('')
   const [team, setTeam] = useState('Time A')
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([])
+
+  const navigation = useNavigation()
 
   const route = useRoute()
   const { group } = route.params as PlayerRouteParams
@@ -77,6 +80,30 @@ export function Players() {
     }
   }
 
+  async function deleteGroup() {
+    try {
+      await deleteGroupByName(group)
+      navigation.navigate('groups')
+    } catch (err) {
+      console.log(err)
+      Alert.alert('Remover grupo', 'Não foi possível remover esse grupo.')
+    }
+  }
+
+  function handleDeleteGroup() {
+    Alert.alert('Remover grupo', 'Deseja remover o grupo?', [
+      {
+        text: 'Não',
+        style: 'cancel'
+      },
+      {
+        text: 'Sim',
+        onPress: deleteGroup,
+        style: 'destructive'
+      }
+    ])
+  }
+
   useEffect(() => {
     fetchPlayersByTeam()
   }, [group, team])
@@ -123,7 +150,7 @@ export function Players() {
         contentContainerStyle={[{ paddingBottom: 100 }, players.length === 0 && { flex: 1 }]}
       />
 
-      <Button title='Remover turma' type='SECONDARY' />
+      <Button title='Remover turma' type='SECONDARY' onPress={handleDeleteGroup} />
     </PlayersContainer>
   );
 }
