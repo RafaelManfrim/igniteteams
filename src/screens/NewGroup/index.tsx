@@ -19,16 +19,16 @@ export function NewGroup() {
   async function handleCreateGroup() {
     try {
       if (groupName.trim().length === 0) {
-        throw new AppError('Informe o nome do grupo');
+        throw new AppError('Informe o nome da turma');
       }
 
       await createGroup(groupName)
       navigation.navigate('players', { group: groupName })
     } catch (err) {
       if (err instanceof AppError) {
-        Alert.alert('Novo Grupo', err.message)
+        Alert.alert('Nova Turma', err.message)
       } else {
-        Alert.alert('Erro Inesperado', 'Não foi possível criar o grupo')
+        Alert.alert('Erro Inesperado', 'Não foi possível criar a turma')
         console.log(err)
       }
     }
