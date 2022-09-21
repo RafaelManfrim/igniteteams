@@ -13,6 +13,7 @@ import { ListEmpty } from '@components/ListEmpty';
 import { AppError } from '@utils/AppError';
 import { PlayerStorageDTO } from '@storage/player/PlayerStorageDTO';
 import { addPlayerByGroup } from '@storage/player/addPlayerByGroup';
+import { removePlayerByGroup } from '@storage/player/removePlayerByGroup';
 import { getPlayersByGroupAndTeam } from '@storage/player/getPlayerByGroupAndTeam';
 
 import { HeaderList, NumberOfPlayers, PlayerContainerForm, PlayersContainer } from './styles';
@@ -66,6 +67,16 @@ export function Players() {
     }
   }
 
+  async function handleRemovePlayer(playerName: string) {
+    try {
+      await removePlayerByGroup(playerName, group)
+      fetchPlayersByTeam()
+    } catch (err) {
+      console.log(err)
+      Alert.alert('Remover pessoa', 'Não foi possível remover essa pessoa.')
+    }
+  }
+
   useEffect(() => {
     fetchPlayersByTeam()
   }, [group, team])
@@ -105,7 +116,7 @@ export function Players() {
         data={players}
         keyExtractor={item => item.name}
         renderItem={({ item }) => (
-          <PlayerCard name={item.name} onRemove={() => { }} />
+          <PlayerCard name={item.name} onRemove={() => handleRemovePlayer(item.name)} />
         )}
         ListEmptyComponent={() => <ListEmpty message='Não há pessoas nesse time' />}
         showsVerticalScrollIndicator={false}
