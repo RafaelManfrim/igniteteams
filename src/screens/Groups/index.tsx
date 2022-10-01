@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Alert } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { GroupCard } from '@components/GroupCard';
@@ -27,9 +27,11 @@ export function Groups() {
       setIsLoading(true)
       const groups = await getAllGroups()
       setGroups(groups)
-      setIsLoading(false)
     } catch (err) {
       console.log(err)
+      Alert.alert('Turmas', 'Não foi possível carregar as turmas')
+    } finaly {
+      setIsLoading(false)
     }
   }
 
