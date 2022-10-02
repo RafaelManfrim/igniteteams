@@ -70,7 +70,7 @@ export function Players() {
     } catch (err) {
       console.log(err)
       Alert.alert('Pessoas', 'Não foi possível carregar as pessoas do time selecionado.')
-    } finaly {
+    } finally {
       setIsLoading(false)
     }
   }
